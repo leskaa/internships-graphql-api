@@ -1,6 +1,7 @@
 import { Query, Resolver, InputType, Field, Int, Mutation, Arg, Float } from 'type-graphql';
 import { getMongoManager } from 'typeorm';
 import Internship from '../entity/Internship';
+import { ObjectID } from 'mongodb';
 
 @InputType()
 class CompensationInput {
@@ -104,24 +105,36 @@ export default class InternshipResolver {
 
   @Mutation(() => Boolean)
   async updateInternship(
-    @Arg('id', () => Int) id: number,
+    @Arg('id') id: string,
     @Arg('input', () => InternshipUpdateInput) input: InternshipUpdateInput,
   ) {
     const manager = getMongoManager();
-    await manager.update(Internship, id, input);
-    return true;
+    const result = await manager.updateOne(Internship, {
+      _id: new ObjectID(id)
+    }, { $set: input });
+    return result.modifiedCount === 1;
   }
 
   @Mutation(() => Boolean)
-  async deleteInternship(@Arg('id', () => Int) id: number) {
+  async deleteInternship(@Arg('id') id: string) {
     const manager = getMongoManager();
-    await manager.delete(Internship, id);
-    return true;
+    const result = await manager.deleteOne(Internship, {
+      _id: new ObjectID(id)
+    });
+    return result.deletedCount === 1;
   }
 
   @Query(() => [Internship])
-  internships() {
+  async internships() {
     const manager = getMongoManager();
-    return manager.find(Internship);
+    const internships = await manager.find(Internship);
+    return internships;
+  }
+
+  @Query(() => Internship)
+  async internship(@Arg("id") id: string) {
+    const manager = getMongoManager();
+    const internship = await manager.findOne(Internship, id);
+    return internship;
   }
 }
