@@ -17,7 +17,7 @@ import InternshipResolver from './resolvers/InternshipResolver';
     context: ({ req, res }) => ({ req, res }),
   });
 
-  apolloServer.applyMiddleware({ app, cors: false });
+  apolloServer.applyMiddleware({ app, cors: true });
 
   app.listen(4000, () => {
     console.info('🚀  Express server started!');
