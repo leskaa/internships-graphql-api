@@ -1,7 +1,7 @@
 import { Query, Resolver, InputType, Field, Int, Mutation, Arg, Float } from 'type-graphql';
 import { getMongoManager } from 'typeorm';
-import Internship from '../entity/Internship';
 import { ObjectID } from 'mongodb';
+import Internship from '../entity/Internship';
 
 @InputType()
 class CompensationInput {
@@ -109,9 +109,13 @@ export default class InternshipResolver {
     @Arg('input', () => InternshipUpdateInput) input: InternshipUpdateInput,
   ) {
     const manager = getMongoManager();
-    const result = await manager.updateOne(Internship, {
-      _id: new ObjectID(id)
-    }, { $set: input });
+    const result = await manager.updateOne(
+      Internship,
+      {
+        _id: new ObjectID(id),
+      },
+      { $set: input },
+    );
     return result.modifiedCount === 1;
   }
 
@@ -119,7 +123,7 @@ export default class InternshipResolver {
   async deleteInternship(@Arg('id') id: string) {
     const manager = getMongoManager();
     const result = await manager.deleteOne(Internship, {
-      _id: new ObjectID(id)
+      _id: new ObjectID(id),
     });
     return result.deletedCount === 1;
   }
@@ -132,7 +136,7 @@ export default class InternshipResolver {
   }
 
   @Query(() => Internship)
-  async internship(@Arg("id") id: string) {
+  async internship(@Arg('id') id: string) {
     const manager = getMongoManager();
     const internship = await manager.findOne(Internship, id);
     return internship;
