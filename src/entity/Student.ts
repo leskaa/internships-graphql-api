@@ -1,5 +1,6 @@
 import { ObjectType, Field, ID, Int } from 'type-graphql';
 import { ObjectIdColumn, ObjectID, Column } from 'typeorm';
+import ClassStanding from './ClassStanding';
 
 @ObjectType()
 export default class Student {
@@ -15,7 +16,7 @@ export default class Student {
   @Column()
   numOfInternships: number;
 
-  @Field()
+  @Field(() => ClassStanding)
   @Column()
-  classStanding: string;
+  classStanding: ClassStanding;
 }

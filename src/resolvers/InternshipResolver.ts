@@ -1,6 +1,8 @@
+/* eslint-disable no-param-reassign */
 import { Query, Resolver, InputType, Field, Int, Mutation, Arg, Float } from 'type-graphql';
 import { getMongoManager } from 'typeorm';
 import { ObjectID } from 'mongodb';
+import ClassStanding from '../entity/ClassStanding';
 import Internship from '../entity/Internship';
 
 @InputType()
@@ -23,8 +25,8 @@ class StudentInput {
   @Field(() => Int)
   numOfInternships: number;
 
-  @Field()
-  classStanding: string;
+  @Field(() => ClassStanding)
+  classStanding: ClassStanding;
 }
 
 @InputType()
@@ -68,8 +70,8 @@ class StudentUpdateInput {
   @Field(() => Int, { nullable: true })
   numOfInternships?: number;
 
-  @Field(() => String, { nullable: true })
-  classStanding?: string;
+  @Field(() => ClassStanding, { nullable: true })
+  classStanding?: ClassStanding;
 }
 
 @InputType()
@@ -109,6 +111,31 @@ export default class InternshipResolver {
     @Arg('input', () => InternshipUpdateInput) input: InternshipUpdateInput,
   ) {
     const manager = getMongoManager();
+    const internship = await manager.findOne(Internship, id);
+    if (internship) {
+      if (input.compensation) {
+        if (!input.compensation.base && internship.compensation.base) {
+          input.compensation.base = internship.compensation.base;
+        }
+        if (!input.compensation.bonus && internship.compensation.bonus) {
+          input.compensation.bonus = internship.compensation.bonus;
+        }
+        if (!input.compensation.benefits && internship.compensation.benefits) {
+          input.compensation.benefits = internship.compensation.benefits;
+        }
+      }
+      if (input.student) {
+        if (!input.student.classStanding && internship.student.classStanding) {
+          input.student.classStanding = internship.student.classStanding;
+        }
+        if (!input.student.numOfInternships && internship.student.numOfInternships) {
+          input.student.numOfInternships = internship.student.numOfInternships;
+        }
+        if (!input.student.university && internship.student.university) {
+          input.student.university = internship.student.university;
+        }
+      }
+    }
     const result = await manager.updateOne(
       Internship,
       {
