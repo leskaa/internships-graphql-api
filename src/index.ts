@@ -14,7 +14,9 @@ import AuthResolver from './resolvers/AuthResolver';
 
   // Setup Redis / Sessions
   const RedisStore = connectRedis(session);
-  const redisClient = redis.createClient();
+  const redisClient = process.env.NODE_ENV
+    ? redis.createClient({ url: process.env.REDISCLOUD_URL })
+    : redis.createClient();
 
   app.use(
     session({
@@ -33,7 +35,7 @@ import AuthResolver from './resolvers/AuthResolver';
 
   // Setup MongoDB Connection
   const dbOptions = await getConnectionOptions(process.env.NODE_ENV || 'development');
-  Object.assign(dbOptions, { url: process.env.DATABASE_URL });
+  Object.assign(dbOptions, { url: process.env.MONGODB_URI });
   await CreateMongoConnection({ ...dbOptions, name: 'default' });
 
   // Setup Apollo GraphQL Server
