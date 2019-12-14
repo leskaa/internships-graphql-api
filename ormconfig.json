@@ -1,18 +1,48 @@
-{
-  "type": "mongodb",
-  "host": "localhost",
-  "authSource": "admin",
-  "username": "local",
-  "password": "developer",
-  "database": "internship-development",
-  "synchronize": true,
-  "logging": false,
-  "entities": ["src/entity/*.ts"],
-  "subscribers": ["src/subscriber/*.ts"],
-  "migrations": ["src/migration/*.ts"],
-  "cli": {
-    "entitiesDir": "src/entity",
-    "migrationsDir": "src/migration",
-    "subscribersDir": "src/subscriber"
+[
+  {
+    "name": "development",
+    "type": "mongodb",
+    "host": "localhost",
+    "authSource": "admin",
+    "username": "local",
+    "password": "developer",
+    "database": "internship-development",
+    "synchronize": true,
+    "logging": false,
+    "entities": [
+      "src/entity/*.ts"
+    ],
+    "subscribers": [
+      "src/subscriber/*.ts"
+    ],
+    "migrations": [
+      "src/migration/*.ts"
+    ],
+    "cli": {
+      "entitiesDir": "src/entity",
+      "migrationsDir": "src/migration",
+      "subscribersDir": "src/subscriber"
+    }
+  },
+  {
+    "name": "production",
+    "type": "mongodb",
+    "url": "placeholder",
+    "synchronize": true,
+    "logging": false,
+    "entities": [
+      "src/entity/*.ts"
+    ],
+    "subscribers": [
+      "src/subscriber/*.ts"
+    ],
+    "migrations": [
+      "src/migration/*.ts"
+    ],
+    "cli": {
+      "entitiesDir": "src/entity",
+      "migrationsDir": "src/migration",
+      "subscribersDir": "src/subscriber"
+    }
   }
-}
+]

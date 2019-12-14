@@ -1,6 +1,6 @@
 import { ObjectType, Field, ID, Int } from 'type-graphql';
 import { ObjectIdColumn, ObjectID, Column } from 'typeorm';
-import ClassStanding from './ClassStanding';
+import ClassStanding from '../graphql-types/ClassStanding';
 
 @ObjectType()
 export default class Student {
