@@ -14,9 +14,10 @@ import AuthResolver from './resolvers/AuthResolver';
 
   // Setup Redis / Sessions
   const RedisStore = connectRedis(session);
-  const redisClient = process.env.NODE_ENV
-    ? redis.createClient({ url: process.env.REDISCLOUD_URL })
+  const redisClient = process.env.NODE_ENV === 'production'
+    ? redis.createClient(process.env.REDISCLOUD_URL!, {no_ready_check: true})
     : redis.createClient();
+
 
   app.use(
     session({
