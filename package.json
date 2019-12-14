@@ -4,6 +4,7 @@
   "description": "Internship GraphQL API",
   "scripts": {
     "start": "nodemon --exec ts-node src/index.ts",
+    "build": "tsc",
     "lint": "tsc --noEmit && eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,6 +14,7 @@
     "@types/bcryptjs": "^2.4.2",
     "@types/connect-redis": "^0.0.13",
     "@types/express-session": "^1.15.16",
+    "@types/node-fetch": "^2.5.4",
     "@types/redis": "^2.8.14",
     "apollo-server-express": "^2.9.9",
     "bcryptjs": "^2.4.3",
