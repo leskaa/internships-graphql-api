@@ -44,6 +44,8 @@ import AuthResolver from './resolvers/AuthResolver';
       resolvers: [AuthResolver, InternshipResolver],
     }),
     context: ({ req, res }) => ({ req, res }),
+    playground: true,
+    introspection: true,
   });
   apolloServer.applyMiddleware({ app, cors: true });
 
