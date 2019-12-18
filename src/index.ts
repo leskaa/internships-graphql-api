@@ -14,10 +14,10 @@ import AuthResolver from './resolvers/AuthResolver';
 
   // Setup Redis / Sessions
   const RedisStore = connectRedis(session);
-  const redisClient = process.env.NODE_ENV === 'production'
-    ? redis.createClient(process.env.REDISCLOUD_URL!, {no_ready_check: true})
-    : redis.createClient();
-
+  const redisClient =
+    process.env.REDIS_URL != null
+      ? redis.createClient(process.env.REDIS_URL)
+      : redis.createClient();
 
   app.use(
     session({
@@ -28,7 +28,8 @@ import AuthResolver from './resolvers/AuthResolver';
       saveUninitialized: false,
       cookie: {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: false,
+        // secure: process.env.NODE_ENV === 'production',
         maxAge: 1000 * 60 * 60 * 24 * 7 * 365,
       },
     }),

@@ -21,6 +21,7 @@ module.exports = {
   rules: {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
     "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/camelcase": "off",
     "max-classes-per-file": 0,
     "class-methods-use-this": 0,
     "no-console": 0

@@ -11,7 +11,7 @@ import InternshipInput from '../graphql-types/InternshipInput';
 @Resolver()
 export default class InternshipResolver {
   @Mutation(() => Internship)
-  // @UseMiddleware(isAuth)
+  @UseMiddleware(isAuth)
   async createInternship(@Arg('options', () => InternshipInput) options: InternshipInput) {
     const manager = getMongoManager();
     const internship = manager.create(Internship, options);
