@@ -10,6 +10,9 @@ export default class InternshipInput {
   @Field()
   company: string;
 
+  @Field()
+  location: string;
+
   @Field(() => CompensationInput)
   compensation: CompensationInput;
 

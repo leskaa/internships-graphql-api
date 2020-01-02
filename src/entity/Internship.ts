@@ -18,6 +18,10 @@ export default class Internship {
   @Column()
   company: string;
 
+  @Field()
+  @Column()
+  location: string;
+
   @Field(() => Compensation)
   @Column()
   compensation: Compensation;
