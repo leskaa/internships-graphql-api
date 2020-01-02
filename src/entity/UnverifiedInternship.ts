@@ -18,6 +18,10 @@ export default class UnverifiedInternship {
   @Column()
   company: string;
 
+  @Field()
+  @Column()
+  location: string;
+
   @Field(() => Compensation)
   @Column()
   compensation: Compensation;

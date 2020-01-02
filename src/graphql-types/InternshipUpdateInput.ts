@@ -10,6 +10,9 @@ export default class InternshipUpdateInput {
   @Field(() => String, { nullable: true })
   company?: string;
 
+  @Field(() => String, { nullable: true })
+  location: string;
+
   @Field(() => CompensationUpdateInput, { nullable: true })
   compensation?: CompensationUpdateInput;
 
