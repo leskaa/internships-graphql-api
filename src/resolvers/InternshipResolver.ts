@@ -81,6 +81,16 @@ export default class InternshipResolver {
     return result.deletedCount === 1;
   }
 
+  @Mutation(() => Boolean)
+  @UseMiddleware(isAuth)
+  async deleteUnverifiedInternship(@Arg('id') id: string) {
+    const manager = getMongoManager();
+    const result = await manager.deleteOne(UnverifiedInternship, {
+      _id: new ObjectID(id),
+    });
+    return result.deletedCount === 1;
+  }
+
   @Query(() => [Internship])
   async internships() {
     const manager = getMongoManager();
@@ -88,10 +98,24 @@ export default class InternshipResolver {
     return internships;
   }
 
+  @Query(() => [UnverifiedInternship])
+  async unverifiedInternships() {
+    const manager = getMongoManager();
+    const unverifiedInternships = await manager.find(UnverifiedInternship);
+    return unverifiedInternships;
+  }
+
   @Query(() => Internship)
   async internship(@Arg('id') id: string) {
     const manager = getMongoManager();
     const internship = await manager.findOne(Internship, id);
     return internship;
+  }
+
+  @Query(() => UnverifiedInternship)
+  async unverifiedInternship(@Arg('id') id: string) {
+    const manager = getMongoManager();
+    const unverifiedInternship = await manager.findOne(UnverifiedInternship, id);
+    return unverifiedInternship;
   }
 }
