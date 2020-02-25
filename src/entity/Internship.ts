@@ -18,9 +18,9 @@ export default class Internship {
   @Column()
   company: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
-  location: string;
+  location?: string;
 
   @Field(() => Compensation)
   @Column()

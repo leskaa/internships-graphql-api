@@ -18,7 +18,7 @@ export default class UnverifiedInternship {
   @Column()
   company: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
   location: string;
 
