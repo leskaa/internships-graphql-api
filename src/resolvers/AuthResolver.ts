@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import bcrypt from 'bcryptjs';
-import { Resolver, Mutation, Arg, Ctx, Query } from 'type-graphql';
+import { Resolver, Mutation, Arg, Ctx, Query, UseMiddleware } from 'type-graphql';
 import UserResponse from '../graphql-types/UserResponse';
 import AuthInput from '../graphql-types/AuthInput';
 import User from '../entity/User';
+import isAuth from '../middleware/isAuth';
 import MyContext from '../graphql-types/MyContext';
 
 const invalidLoginResponse = {
@@ -18,6 +19,7 @@ const invalidLoginResponse = {
 @Resolver()
 export default class AuthResolver {
   @Mutation(() => UserResponse)
+  @UseMiddleware(isAuth)
   async register(
     @Arg('input')
     { email, password }: AuthInput,

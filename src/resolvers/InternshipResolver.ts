@@ -99,6 +99,7 @@ export default class InternshipResolver {
   }
 
   @Query(() => [UnverifiedInternship])
+  @UseMiddleware(isAuth)
   async unverifiedInternships() {
     const manager = getMongoManager();
     const unverifiedInternships = await manager.find(UnverifiedInternship);
@@ -113,6 +114,7 @@ export default class InternshipResolver {
   }
 
   @Query(() => UnverifiedInternship)
+  @UseMiddleware(isAuth)
   async unverifiedInternship(@Arg('id') id: string) {
     const manager = getMongoManager();
     const unverifiedInternship = await manager.findOne(UnverifiedInternship, id);
